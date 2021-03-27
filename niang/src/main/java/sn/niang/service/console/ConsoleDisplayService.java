@@ -1,68 +1,62 @@
 package sn.niang.service.console;
 
+import sn.niang.domain.Location;
+import sn.niang.domain.User;
+import sn.niang.domain.Vehicule;
+import sn.niang.repository.UserRepository;
 import sn.niang.service.DisplayService;
+
+import java.util.Locale;
 
 public class ConsoleDisplayService implements DisplayService {
 
-    private final DetailPrestationRepository detailPrestationRepository;
 
-    public ConsoleDisplayService(DetailPrestationRepository detailPrestationRepository) {
-        this.detailPrestationRepository = detailPrestationRepository;
+    private final UserRepository userRepository;
+
+    public ConsoleDisplayService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
+
+
     public void afficherBienvenu() {
-        System.out.println("Bienvenu sur la plateforme service à la demande!");
+        System.out.println("Bienvenu sur la plateforme de location en ligne!");
     }
 
     public void afficherMenuPrincipal() {
         System.out.println("> l pour lister les services disponibles ");
     }
 
-    public void afficherListeServices(Prestation[] prestations) {
-        System.out.println("Les services disponibles sont:");
-        for (int i = 0; i < prestations.length; i++) {
-            Prestation prestation = prestations[i];
-            System.out.println(String.format("> %s %s", prestation.getId(), prestation.getNom()));
+
+    public void afficherListeUsers(User[] users){
+        System.out.println("Liste des utilisateurs");
+        for (int i=0;i<users.length;i++){
+            User user=users[i];
+            System.out.println(String.format("> %s %s %s %s %s", user.getId(), user.getNomComplet(),user.getTel(),user.getEmail(),user.getAdresse(),user.getProfil().getLibelle()));
+
+        }
+
+    }
+
+    public void afficherListeVehicules(Vehicule[] vehicules){
+        System.out.println("Liste des vehicules");
+        for (int i=0;i<vehicules.length;i++){
+            Vehicule vehicule=vehicules[i];
+            System.out.println(String.format("> %s %s %s",vehicule.getId(),vehicule.getMatricule(),vehicule.getDescription().getMarque(),vehicule.getDescription().getCouleur(),vehicule.getDescription().getNbRoues()));
+        }
+
+    }
+
+    public void afficherListeLocations(Location[] locations,User user){
+        System.out.println(String.format("La liste des locations de %s :", user.getNomComplet()));
+        for (int i = 0; i < locations.length; i++) {
+            Location location = locations[i];
+            System.out.println(String.format("> %s %s %s", location.getId(), location.getDate(), location.getPeriode(),location.getVehicule().getMatricule()));
         }
     }
 
-    public void afficherPrestataires(Prestation prestation, Prestataire[] prestataires) {
-        System.out.println(String.format("La liste des prestataires %s :", prestation.getNom()));
-        for (int i = 0; i < prestataires.length; i++) {
-            Prestataire prestataire = prestataires[i];
-            System.out.println(String.format("> %s %s %s", prestataire.getId(), prestataire.getPrenom(), prestataire.getNom()));
-        }
-    }
 
-    public void afficherDetailsPrestation() {
-        System.out.println("Les détails des prestations de Alassane Sene : ");
-        DetailPrestation[] detailPrestations = detailPrestationRepository.getAll();
-        for (int i = 0; i <detailPrestations.length; i++) {
-            DetailPrestation detailPrestation = detailPrestations[i];
-            System.out.println(
-                    String.format(
-                            "> %s %s : %s",
-                            detailPrestation.getId(),
-                            detailPrestation.getDetails(),
-                            detailPrestation.getPrix()
-                    )
-            );
-        }
-    }
 
-    public void afficherDetailsContrat() {
-        System.out.println("Prestation Alassane Sene: Course Dakar 2500 ");
-    }
 
-    public void afficherDemandeHeure() {
-        System.out.println("Quelle heure voulez-vous (hh:mm) ?");
-    }
 
-    public void afficherConfirmation(String heure) {
-        System.out.println(String.format("OK pour %s", heure));
-    }
-
-    public void afficherOptionInconnue() {
-        System.out.println("Choix inconnu");
-    }
 }

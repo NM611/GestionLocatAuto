@@ -14,6 +14,10 @@ public class ArrayBasedUserRepository implements UserRepository{
         return USERS;
     }
 
+    public User[] getAll() {
+        return USERS;
+    }
+
     public User findById(int id){
         for (int i = 0; i < USERS.length; i++) {
             if(id == USERS[i].getId()){

@@ -20,8 +20,13 @@ public class ListBasedUserRepository implements UserRepository{
         return users.toArray(new User[0]);
     }
 
+    public User[] getAll() {
+        return new User[0];
+    }
+
 
     public User findById(int idUser) {
-        return null;
+
+        return new User(1,"Fatou Diop","77878788","Ouakam","gueye@gmail.com","fat","passer",new Profil(1,"client"));
     }
 }

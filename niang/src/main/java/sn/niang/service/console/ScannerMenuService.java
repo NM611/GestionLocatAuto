@@ -1,5 +1,7 @@
 package sn.niang.service.console;
 
+import sn.niang.domain.User;
+import sn.niang.repository.UserRepository;
 import sn.niang.service.DisplayService;
 import sn.niang.service.MenuService;
 
@@ -8,14 +10,14 @@ import java.util.Scanner;
 public class ScannerMenuService implements MenuService {
     private final DisplayService displayService;
     private final Scanner scanner;
-    private final PrestationRepository prestationRepository;
-    private final PrestataireRepository prestataireRepository;
+    private final UserRepository userRepository;
 
-    public ScannerMenuService(DisplayService displayService, PrestationRepository prestationRepository, PrestataireRepository prestataireRepository) {
+
+    public ScannerMenuService(DisplayService displayService, UserRepository userRepository) {
         this.displayService = displayService;
-        this.prestataireRepository = prestataireRepository;
+        this.userRepository = userRepository;
         this.scanner = new Scanner(System.in);
-        this.prestationRepository = prestationRepository;
+
     }
 
 
@@ -23,8 +25,14 @@ public class ScannerMenuService implements MenuService {
         return scanner.next();
     }
 
-    private void afficherMenu( String choix) {
+    public void afficherMenu() {
+        String choix = lireChoix();
+
+    }
+
+   /* private void afficherMenu( String choix) {
         Prestation[] prestations = prestationRepository.getAll();
+
         if("l".equalsIgnoreCase(choix)){
             displayService.afficherListeServices(prestations);
             int idPrestation = scanner.nextInt();
@@ -59,5 +67,5 @@ public class ScannerMenuService implements MenuService {
     public void afficherMenu() {
         String choix = lireChoix();
         afficherMenu(choix );
-    }
+    }*/
 }
